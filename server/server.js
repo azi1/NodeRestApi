@@ -26,4 +26,6 @@ newTodo.save().then((doc)=> {
 
 app.listen(3000,()=>{
     console.log("listeining to 3000");
-})
+});
+
+module.exports = { app };
