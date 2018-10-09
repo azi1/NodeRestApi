@@ -1,3 +1,6 @@
+
+require('../config/config');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const {ObjectID}  = require('mongodb');
@@ -9,7 +12,7 @@ const {user} = require('./models/user');
 var app = express();
 app.use(bodyParser.json()); // middle ware to send and accept json data
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT;
 
 
 app.post('/todo',(req,res)=>{
@@ -60,10 +63,10 @@ app.delete('/todo/:id',(req, res) => {
         if(todo) {       
            return  res.send({todo});
          }
-         res.send({message:"no todo found"})
+         res.status(404).send();
 
     }).catch((err) => {
-        res.status(400).send({message: "ID nOT FOUND"})
+        res.status(404).send({message: "ID nOT FOUND"})
     })
 
 });
