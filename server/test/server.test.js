@@ -115,7 +115,7 @@ describe('DELETE /todo/:id', () => {
         }
 
         todo.findById(hexId).then((todo) => {
-          expect(todo).toNotExist();
+          expect(todo).toBeFalsy();
           done();
         }).catch((e) => done(e));
       });
@@ -156,7 +156,7 @@ describe('PATCH /todo/:id', () => {
       .expect((res) => {
         expect(res.body.updatedTodo.text).toBe(text);
         expect(res.body.updatedTodo.completed).toBe(true);
-        expect(res.body.updatedTodo.completedAt).toBeA('number');
+        expect(typeof res.body.updatedTodo.completedAt).toBe('number');
       })
       .end(done);
   });
@@ -176,7 +176,7 @@ describe('PATCH /todo/:id', () => {
       .expect((res) => {
         expect(res.body.updatedTodo.text).toBe(text);
         expect(res.body.updatedTodo.completed).toBe(false);
-        expect(res.body.updatedTodo.completedAt).toNotExist();
+        expect(res.body.updatedTodo.completedAt).toBeFalsy();
       })
       .end(done);
   });
@@ -220,9 +220,9 @@ describe('User Authentication', () => {
       .send({email, password})
       .expect(200)
       .expect((res) =>{
-        expect(res.headers['x-auth']).toExist();
-        expect(res.body._id).toExist();
-        expect(res.body.email).toExist();
+        expect(res.headers['x-auth']).toBeTruthy();
+        expect(res.body._id).toBeTruthy();
+        expect(res.body.email).toBeTruthy();
       })
       .end(done);
     });
@@ -238,8 +238,8 @@ describe('user login', ()=>{
     .send({email, password})
     .expect(200)
     .expect((res) => {
-      expect(res.headers['x-auth']).toExist();
-      expect(res.body._id).toExist();
+      expect(res.headers['x-auth']).toBeTruthy();
+      expect(res.body._id).toBeTruthy();
       expect(res.body.email).toBe(email);
     })
      .end(done);
